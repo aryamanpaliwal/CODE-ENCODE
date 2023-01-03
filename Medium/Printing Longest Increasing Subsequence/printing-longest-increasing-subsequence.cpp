@@ -7,34 +7,68 @@ using namespace std;
 class Solution {
   public:
     vector<int> longestIncreasingSubsequence(int n, vector<int>& a) {
+        vector<pair<int, int>> dp(n);
+        vector<int> prev(n);
+        for(int i=0;i<n;i++)
+        {
+            dp[i]={a[i],1};
+            prev[i]=i;
+        }
+        int mi=0;
+        for(int i=1;i<n;i++)
+        {
+            for(int j=0;j<i;j++)
+            {
+                if(a[j]<a[i] && dp[i].second<1+dp[j].second)
+                {
+                    dp[i].second=1+dp[j].second;
+                    prev[i]=j;
+                }
+            }
+            if(dp[i].second>dp[mi].second)
+            {
+                mi=i;
+            }
+        }
+        int li=mi;
+        vector<int> res;
+        while(prev[li]!=li)
+        {
+            res.push_back(a[li]);
+            li=prev[li];
+        }
+        res.push_back(a[li]);
+        reverse(res.begin(), res.end());
+        return res;
+        
         // Code here
-        set<int> s;
-        for(auto x:a)
-            s.insert(x);
-        vector<int> temp;
-        for(auto x:s)
-            temp.push_back(x);
-        // int n=a.size();
-        int m=temp.size();
-        int dp[n+1][m+1];
-        for(int i=0;i<=n;i++)
-        {
-            for(int j=0;j<=m;j++)
-            {
-                if(i==0 || j==0)
-                    dp[i][j]=0;
-            }
-        }
-        for(int i=1;i<=n;i++)
-        {
-            for(int j=1;j<=m;j++)
-            {
-                if(a[i-1]==temp[j-1])
-                    dp[i][j]=1+dp[i-1][j-1];
-                else
-                    dp[i][j]=max(dp[i-1][j], dp[i][j-1]);
-            }
-        }
+        // set<int> s;
+        // for(auto x:a)
+        //     s.insert(x);
+        // vector<int> temp;
+        // for(auto x:s)
+        //     temp.push_back(x);
+        // // int n=a.size();
+        // int m=temp.size();
+        // int dp[n+1][m+1];
+        // for(int i=0;i<=n;i++)
+        // {
+        //     for(int j=0;j<=m;j++)
+        //     {
+        //         if(i==0 || j==0)
+        //             dp[i][j]=0;
+        //     }
+        // }
+        // for(int i=1;i<=n;i++)
+        // {
+        //     for(int j=1;j<=m;j++)
+        //     {
+        //         if(a[i-1]==temp[j-1])
+        //             dp[i][j]=1+dp[i-1][j-1];
+        //         else
+        //             dp[i][j]=max(dp[i-1][j], dp[i][j-1]);
+        //     }
+        // }
         // for(int i=0;i<=n;i++)
         // {
         //     for(int j=0;j<=m;j++)
@@ -42,26 +76,26 @@ class Solution {
         //         cout<<dp[i][j]<<" ";
         //     }cout<<endl;
         // }
-        vector<int> res;
-        int i=n,j=m;
-        while(i>0 && j>0)
-        {
-            if(a[i-1]==temp[j-1])
-            {
-                res.push_back(a[i-1]);
-                i--;
-                j--;
-            }
-            else
-            {
-                if(dp[i-1][j]<dp[i][j-1])
-                    j--;
-                else
-                    i--;
-            }
-        }
-        reverse(res.begin(), res.end());
-        return res;
+        // vector<int> res;
+        // int i=n,j=m;
+        // while(i>0 && j>0)
+        // {
+        //     if(a[i-1]==temp[j-1])
+        //     {
+        //         res.push_back(a[i-1]);
+        //         i--;
+        //         j--;
+        //     }
+        //     else
+        //     {
+        //         if(dp[i-1][j]<dp[i][j-1])
+        //             j--;
+        //         else
+        //             i--;
+        //     }
+        // }
+        // reverse(res.begin(), res.end());
+        // return res;
         
     }
 };
