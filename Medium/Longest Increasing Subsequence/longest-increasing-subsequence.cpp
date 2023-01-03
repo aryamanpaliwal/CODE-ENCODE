@@ -23,10 +23,63 @@ class Solution
     }
     int longestSubsequence(int n, int a[])
     {
+        vector<pair<int, int>> v(n);
+        for(int i=0;i<n;i++)
+        {
+            v[i]={a[i], 1};
+        }
+        for(int i=1;i<n;i++)
+        {
+            for(int j=0;j<i;j++)
+            {
+                if(v[j].first<v[i].first)
+                {
+                    v[i].second=max(v[i].second, v[j].second+1);
+                }
+            }
+        }
+        int res=INT_MIN;
+        for(auto x:v)
+        {
+            // cout<<x.second<<" ";
+            res=max(res, x.second);
+        }
+        return res;
+        
+        
+        
+        
        // your code here
-        int maxi=*max_element(a, a + n);
-        vector<vector<int>> dp(n+1, vector<int> (maxi+2, -1));
-        return solve(0, 0, a, n, dp);
+        // int maxi=*max_element(a, a + n);
+        // vector<vector<int>> dp(n+1, vector<int> (maxi+2, -1));
+        // return solve(0, 0, a, n, dp);
+        // set<int> s;
+        // for(int i=0;i<n;i++)
+        //     s.insert(a[i]);
+        // vector<int> temp;
+        // for(auto x:s)
+        //     temp.push_back(x);
+        // int m=temp.size();
+        // int dp[n+1][m+1];
+        // for(int i=0;i<=n;i++)
+        // {
+        //     for(int j=0;j<=m;j++)
+        //     {
+        //         if(i==0 || j==0)
+        //             dp[i][j]=0;
+        //     }
+        // }
+        // for(int i=1;i<=n;i++)
+        // {
+        //     for(int j=1;j<=m;j++)
+        //     {
+        //         if(a[i-1]==temp[j-1])
+        //             dp[i][j]=1+dp[i-1][j-1];
+        //         else
+        //             dp[i][j]=max(dp[i-1][j], dp[i][j-1]);
+        //     }
+        // }
+        // return dp[n][m];
     }
 };
 
