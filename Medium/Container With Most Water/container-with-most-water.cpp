@@ -12,32 +12,25 @@ long long maxArea(long long height[], int n)
 {
     // Your code goes here
     long long area=0;
-        // for(int i=0;i<n-1;i++)
-        // {
-        //     for(int j=i+1;j<n;j++)
-        //     {
-        //         area=max(area,(j-i)*min(height[i],height[j]));
-        //     }
-        // }
-        long long l=0;
-        long long h=n-1;
-        while(l<h)
+    long long l=0;
+    long long h=n-1;
+    while(l<h)
+    {
+        area=max(area,(h-l)*min(height[l],height[h]));
+        if(height[l]<height[h])
         {
-            area=max(area,(h-l)*min(height[l],height[h]));
-            if(height[l]<height[h])
-            {
-                l++;
-            }
-            else if(height[l]>height[h])
-            {
-                h--;
-            }
-            else
-            {
-                l++;h--;
-            }
+            l++;
         }
-        return area;
+        else if(height[l]>height[h])
+        {
+            h--;
+        }
+        else
+        {
+            l++;h--;
+        }
+    }
+    return area;
 }
 
 //{ Driver Code Starts.
